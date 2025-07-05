@@ -1,9 +1,11 @@
 import json
-from typing import List
+import httpx
+import os
+from dotenv import load_dotenv
 
-from schemas import ProductSchema
 from schemas.ProductSchema import Root
 
+load_dotenv()
 goldPrice = 107.263
 
 filename = "products.json"
@@ -34,5 +36,23 @@ def fetch_all_products():
 def calculate_product_price(product: Root):
     return (product.popularityScore + 1) * product.weight * getGoldPrice()
 
-def getGoldPrice():
-    return goldPrice
+#fetch gold price as USD using goldapi
+def getGoldPrice() -> float:
+    GOLD_API_KEY = os.getenv("GOLD_API_KEY")
+    GOLD_API_URL = "https://www.goldapi.io/api/XAU/USD"
+    headers = {
+        "x-access-token": GOLD_API_KEY,
+        "Content-Type": "application/json"
+    }
+
+    try:
+        response = httpx.get(GOLD_API_URL, headers=headers, timeout=5.0)
+        if response.status_code == 200:
+            data = response.json()
+            price = data.get("price_gram_24k")
+            if isinstance(price, (int, float)):
+                return float(price)
+    except Exception:
+        print("Error fetching gold price, returning failsafe value: " + str(goldPrice))  # silently fail and use fallback
+
+    return goldPrice  # fallback to hardcoded value
