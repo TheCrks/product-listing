@@ -1,0 +1,37 @@
+.color-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.color-button-wrapper {
+    padding: 4px; /* space between circle and halo */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+}
+
+    .color-button-wrapper.selected {
+        box-shadow: 0 0 0 2px black; /* the "halo" */
+    }
+
+.color-button {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+.color-label {
+    font-family: 'Avenir', sans-serif;
+    font-size: 12px;
+    margin: 0;
+    color: #333;
+}

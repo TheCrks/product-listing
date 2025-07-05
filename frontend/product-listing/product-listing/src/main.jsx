@@ -5,7 +5,8 @@ import ProductCard from './components/ProductCard.jsx'
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ProductCard />
+    <StrictMode>
+        <h1 className="page-header">Product List</h1>
+        <ProductCard />
   </StrictMode>,
 )
