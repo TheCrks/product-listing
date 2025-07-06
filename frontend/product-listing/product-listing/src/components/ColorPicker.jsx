@@ -1,5 +1,5 @@
 import './ColorPicker.css';
-
+import '../fonts.css';
 function ColorPicker({ onColorSelect, selectedColor }) {
     const colorOptions = [
         { name: 'Yellow Gold', code: '#E6CA97', key: 'yellow' },

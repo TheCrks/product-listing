@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Avenier';
+    src: url('./assets/fonts/avenier/Avenier-Book.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('./assets/fonts/montserat/Montserrat-Regular.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('./assets/fonts/montserat/Montserrat-Medium.otf');
+}

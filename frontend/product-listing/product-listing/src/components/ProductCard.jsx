@@ -1,16 +1,16 @@
 ﻿import ColorPicker from "./ColorPicker";
-import { fetchProducts } from "../api";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Scrollbar, FreeMode } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
-import "./ProductCard.css";
+import './ProductCard.css';
+import '../fonts.css';
 
-function ProductCard() {
+function ProductCard({ products }) {
     const renderStars = (score) => {
-        const rating = Math.max(0, Math.min(score * 5, 5)); // Clamp to [0, 5]
+        const rating = Math.max(0, Math.min(score * 5, 5));
         const percentage = (rating / 5) * 100;
 
         return (
@@ -21,28 +21,15 @@ function ProductCard() {
         );
     };
 
-    const [productList, setProductList] = useState([]);
     const [selectedColors, setSelectedColors] = useState({});
 
     useEffect(() => {
-        async function loadProducts() {
-            try {
-                const products = await fetchProducts();
-                setProductList(products);
-
-                // Set default selected color to 'yellow'
-                const initialColors = {};
-                products.forEach((_, index) => {
-                    initialColors[index] = 'yellow';
-                });
-                setSelectedColors(initialColors);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
-
-        loadProducts();
-    }, []);
+        const initialColors = {};
+        products.forEach((_, index) => {
+            initialColors[index] = 'yellow';
+        });
+        setSelectedColors(initialColors);
+    }, [products]);
 
     const handleColorSelect = (index, color) => {
         setSelectedColors((prev) => ({ ...prev, [index]: color }));
@@ -64,7 +51,7 @@ function ProductCard() {
                 }}
                 className="product-swiper"
             >
-                {productList.map((product, index) => {
+                {products.map((product, index) => {
                     const selectedColor = selectedColors[index] || 'yellow';
 
                     return (
@@ -95,5 +82,4 @@ function ProductCard() {
         </div>
     );
 }
-
 export default ProductCard;

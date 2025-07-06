@@ -59,17 +59,20 @@
 }
 
 .product-name {
+    font-family: 'Montserrat-Medium', sans-serif;
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 4px;
 }
 
 .product-price {
-    font-size: 14px;
+    font-family: 'Montserrat-Regurlar', sans-serif;
+    font-size: 15px;
     margin-bottom: 4px;
 }
 
 .popularity {
+    font-family: 'Avenier', sans-serif;
     font-size: 14px;
     color: #666;
     margin-top: 6px;
