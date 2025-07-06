@@ -11,6 +11,8 @@ from initialiser import configureCors
 
 # uvicorn
 import uvicorn
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # create uvicorn app
 app = FastAPI(title=Config.settings.PROJECT_NAME)
@@ -21,8 +23,9 @@ app = configureCors(app)
 # define routes
 app.include_router(api_fetcher_router,prefix=Config.settings.API_V1_STR)
 
+dist_path = os.path.join(BASE_DIR, "..", "frontend", "product-listing", "product-listing", "dist")
 # Serve frontend from /frontend/dist
-app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
+app.mount("/", StaticFiles(directory=dist_path, html=True), name="static")
 
 if __name__ == "__main__":
       uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
