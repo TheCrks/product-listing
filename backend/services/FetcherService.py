@@ -1,9 +1,12 @@
 import json
+from typing import List
+
 import httpx
 import os
 from dotenv import load_dotenv
 
-from schemas.ProductSchema import Root
+from schemas import ProductSchema
+from schemas.ProductSchema import Root, FilterSchema, ProductData, FilterResponse
 
 load_dotenv()
 goldPrice = 107.263
@@ -56,3 +59,38 @@ def getGoldPrice() -> float:
         print("Error fetching gold price, returning failsafe value: " + str(goldPrice))  # silently fail and use fallback
 
     return goldPrice  # fallback to hardcoded value
+
+#returns products according to given filter
+def fetch_with_filter(body: FilterSchema) -> FilterResponse:
+    raw_products = fetch_all_products()
+    response = FilterResponse(result="", data=[])
+
+    try:
+        # Convert raw dicts to ProductData instances
+        products = [ProductData(**p) if isinstance(p, dict) else p for p in raw_products]
+
+        param = body.parameter
+
+        def compare(product_value):
+            # Attempt to convert both to float if possible, else compare as strings
+            try:
+                return float(body.range_min) <= float(product_value) <= float(body.range_max)
+            except (ValueError, TypeError):
+                return str(body.range_min) <= str(product_value) <= str(body.range_max)
+
+        filtered = [
+            product for product in products
+            if hasattr(product, param) and compare(getattr(product, param))
+        ]
+
+        response.result = "Success"
+        response.data = filtered
+        return response
+
+    except Exception as e:
+        print("Error Filtering:" + str(e))
+        response.result = "Failed"
+        response.data = raw_products
+        return response
+
+

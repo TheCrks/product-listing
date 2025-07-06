@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from typing import Any
+from typing import Any, List
 from dataclasses import dataclass
 import json
 
@@ -58,3 +58,40 @@ class ProductData(BaseModel):
             }
         }
 
+#Filter Schema for filtering
+class FilterSchema(BaseModel):
+    parameter:str
+    range_min:str
+    range_max:str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "parameter": "price",
+                "range_min": "250.0",
+                "range_max": "750.0",
+            }
+        }
+
+#Response Schema for filter endpoint
+class FilterResponse(BaseModel):
+    result:str
+    data:List[ProductData]
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "result": "Success",
+                "data": [{
+                "name": "Engagement Ring 8",
+                "popularityScore": 0.90,
+                "weight": 3.7,
+                "price": 110,
+                "images": {
+                    "yellow": "https://cdn.shopify.com/s/files/1/0484/1429/4167/files/EG115-100P-Y.jpg?v=1696596076",
+                    "rose": "https://cdn.shopify.com/s/files/1/0484/1429/4167/files/EG115-100P-R.jpg?v=1696596151",
+                    "white": "https://cdn.shopify.com/s/files/1/0484/1429/4167/files/EG115-100P-W.jpg?v=1696596147"
+                }
+            }]
+            }
+        }
