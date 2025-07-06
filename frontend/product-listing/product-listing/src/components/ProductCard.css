@@ -61,13 +61,14 @@
 .product-name {
     font-family: 'Montserrat-Medium', sans-serif;
     font-size: 15px;
-    font-weight: 500;
+    color: #666;
     margin-bottom: 4px;
 }
 
 .product-price {
     font-family: 'Montserrat-Regurlar', sans-serif;
     font-size: 15px;
+    color: #666;
     margin-bottom: 4px;
 }
 
